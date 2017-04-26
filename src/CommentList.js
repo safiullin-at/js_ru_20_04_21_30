@@ -18,6 +18,7 @@ export default class CommentList extends Component {
 
     getComments = () => {
         const { comments } = this.props
+            //comments может быть undefined
         return (
             <div style={{marginTop: 15}}>
                 {comments.map((comment) => <Comment key={comment.id} comment={comment} />)}
