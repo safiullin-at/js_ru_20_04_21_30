@@ -2,8 +2,11 @@
 import React, {Component as ReactComponent} from 'react'
 
 export default (OriginalComponent) => class DecoratedComponent extends ReactComponent {
-    state = {
-        isOpen: false
+    constructor(props) {
+        super()
+        this.state = {
+            isOpen: false
+        }
     }
 
     render() {
