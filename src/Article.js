@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import CommnetList from './CommentList'
+import PropTypes from 'prop-types'
 
 export default class Article extends Component {
 /*
@@ -10,6 +11,14 @@ export default class Article extends Component {
         }
     }
 */
+    static propTypes = {
+        article: PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            text: PropTypes.string,
+            comments: PropTypes.array
+        }).isRequired
+    }
+
     state = {
         isOpen: false
     }
