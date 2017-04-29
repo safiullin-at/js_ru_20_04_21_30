@@ -1,32 +1,28 @@
 import React, {Component} from 'react'
 import Article from './Article'
+import collapse from '../decorators/collapse'
 import PropTypes from 'prop-types'
 
-export default class ArticleList extends Component {
-    state = {
-        openArticleId: null
-    }
 
-    render() {
-        const {articles} = this.props
-        const elements = articles.map(article => <li key={article.id}>
-            <Article article={article}
-                     isOpen={article.id == this.state.openArticleId}
-                     toggleOpen={this.toggleArticle(article.id)}
+function ArticleList(props) {
+    const { articles, isOpen, toggleOpenId } = props
+    const elements = articles.map(article => (
+        <li key={article.id}>
+            <Article
+                article={article}
+                isOpen={isOpen(article.id)}
+                toggleOpen={toggleOpenId(article.id)}
             />
-        </li>)
-        return (
-            <ul>
-                {elements}
-            </ul>
-        )
-    }
+        </li>
+    ))
 
-    toggleArticle = openArticleId => ev => {
-        this.setState({openArticleId})
-    }
+    return <ul>{elements}</ul>
 }
 
 ArticleList.propTypes = {
-    articles: PropTypes.array.isRequired
+    articles: PropTypes.array.isRequired,
+    isOpen: PropTypes.func,
+    toggleOpenId: PropTypes.func
 }
+
+export default collapse(ArticleList)

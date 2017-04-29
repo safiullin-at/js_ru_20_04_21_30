@@ -3,20 +3,14 @@ import CommentList from './CommentList'
 import PropTypes from 'prop-types'
 
 class Article extends Component {
-/*
-    constructor() {
-        super()
-        this.state = {
-            isOpen: false
-        }
-    }
-*/
     static propTypes = {
         article: PropTypes.shape({
             title: PropTypes.string.isRequired,
             text: PropTypes.string,
             comments: PropTypes.array
-        }).isRequired
+        }).isRequired,
+        toggleOpen: PropTypes.func,
+        isOpen: PropTypes.bool
     }
 
     componentDidMount() {
