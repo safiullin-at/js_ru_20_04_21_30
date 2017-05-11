@@ -3,17 +3,24 @@ import Article from './Article'
 import PropTypes from 'prop-types'
 import accordion from '../decorators/accordion'
 
-function ArticleList({articles, toggleOpenItem, isItemOpened}) {
-    const elements = articles.map(article => <li key={article.id}>
-        <Article article={article}
-                 isOpen={isItemOpened(article.id)}
-                 toggleOpen={toggleOpenItem(article.id)}/>
-    </li>)
-    return (
-        <ul>
-            {elements}
-        </ul>
-    )
+class ArticleList extends Component {
+    componentDidMount() {
+        console.log('---', this.refs)
+    }
+
+    render() {
+        const {articles, toggleOpenItem, isItemOpened} = this.props
+        const elements = articles.map(article => <li key={article.id} ref = {article.id}>
+            <Article article={article}
+                     isOpen={isItemOpened(article.id)}
+                     toggleOpen={toggleOpenItem(article.id)}/>
+        </li>)
+        return (
+            <ul>
+                {elements}
+            </ul>
+        )
+    }
 }
 
 ArticleList.propTypes = {
