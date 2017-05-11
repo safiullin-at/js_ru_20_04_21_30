@@ -6,11 +6,16 @@ class Chart extends Component {
         articles: PropTypes.array
     };
 
+    componentDidMount() {
+        console.log('---', 'mounting chart')
+    }
+
     render() {
         return <div ref = {this.setContainerRef} />
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('---', 'updating chart')
         //perform some chart update
     }
 
