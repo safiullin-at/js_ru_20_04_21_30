@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Comment from './Comment'
+import CommentForm from './CommentForm'
 import toggleOpen from '../decorators/toggleOpen'
 import PropTypes from 'prop-types'
 
@@ -20,9 +21,18 @@ function getBody(props) {
     if (!isOpen) return null
     if (!comments.length) return <p>No comments yet</p>
     return (
-        <ul>
-            {comments.map(comment => <li key={comment.id}><Comment comment={comment}/></li>)}
-        </ul>
+        <div>
+            <ul>
+                {comments.map(comment => <li key={comment.id}><Comment comment={comment}/></li>)}
+            </ul>
+            {getCommentForm()}
+        </div>
+    )
+}
+
+function getCommentForm() {
+    return (
+        <CommentForm />
     )
 }
 
