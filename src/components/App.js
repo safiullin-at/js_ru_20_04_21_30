@@ -1,45 +1,39 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import ArticleList from './ArticleList'
 import Chart from './Chart'
 import UserForm from './UserForm'
-import Select from 'react-select'
-import 'react-select/dist/react-select.css'
+import Filters from './Filters/index'
+import Counter from './Counter'
 
 class App extends Component {
     static propTypes = {
-
+        articles: PropTypes.array
     };
 
     state = {
-        counter: 0,
-        selection: null
+        counter: 0
     }
 
-    render() {
-        const options = this.props.articles.map(article => ({
-            label: article.title,
-            value: article.id
-        }))
-        return (
-            <div>
-                <UserForm />
-                <a href="#" onClick = {this.updateCounter}>update chart</a>
-                <Select options = {options} value = {this.state.selection}
-                        onChange = {this.handleSelectionChange} multi />
-                <ArticleList articles = {this.props.articles} />
-                <Chart articles={this.props.articles} key={this.state.counter} />
-            </div>
-        )
-    }
-
-    updateCounter = ev => {
+    updateCounter = (ev) => {
         ev.preventDefault()
         this.setState({
             counter: this.state.counter + 1
         })
     }
 
-    handleSelectionChange = selection => this.setState({ selection })
+    render() {
+        return (
+            <div>
+                <Counter />
+                <UserForm />
+                <Filters articles = {[]} />
+                <a href = "#" onClick = {this.updateCounter}>update chart</a>
+                <ArticleList />
+                <Chart articles = {this.props.articles} key={this.state.counter}/>
+            </div>
+        )
+    }
 }
 
 export default App
