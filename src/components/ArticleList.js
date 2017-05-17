@@ -29,13 +29,29 @@ class ArticleList extends Component {
 }
 
 ArticleList.propTypes = {
+    // from redux store
     articles: PropTypes.array,
-    //from accordion decorator
+    // from accordion decorator
     toggleOpenItem: PropTypes.func.isRequired,
     isItemOpened: PropTypes.func.isRequired
 }
 
-export default connect(({articles}) => ({
-        articles
-    })
-)(accordion(ArticleList))
+const mapStateToProps = ({articles, filters: {selection = [], dateRange: {from: dateFrom, to: dateTo}}}) => {
+    articles = articles.map(article => ({...article, date: new Date(article.date)}))
+
+    // filtering by id
+    const idToArticleMapping = articles.reduce((acc, cur) => ({...acc, [cur.id]: cur}), {})
+    let filteredArticles = selection.length ? selection.map(({value}) => idToArticleMapping[value]) : articles
+    filteredArticles = filteredArticles.filter(article => article)
+
+    // filtering by date
+    dateFrom = dateFrom && new Date(dateFrom)
+    dateTo = dateTo && new Date(dateTo)
+    if (dateFrom && dateTo) filteredArticles = filteredArticles.filter(({date}) => (date >= dateFrom && date <= dateTo))
+    else if (dateFrom && !dateTo) filteredArticles = filteredArticles.filter(({date}) => (date => dateFrom))
+    else if (!dateFrom && dateTo) filteredArticles = filteredArticles.filter(({date}) => (date <= dateTo))
+
+    return {articles: filteredArticles}
+}
+
+export default connect(mapStateToProps)(accordion(ArticleList))

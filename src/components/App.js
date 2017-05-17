@@ -24,10 +24,11 @@ class App extends Component {
 
     render() {
         return (
+
             <div>
                 <Counter />
                 <UserForm />
-                <Filters articles = {[]} />
+                <Filters />
                 <a href = "#" onClick = {this.updateCounter}>update chart</a>
                 <ArticleList />
                 <Chart articles = {this.props.articles} key={this.state.counter}/>

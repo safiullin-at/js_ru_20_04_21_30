@@ -20,7 +20,9 @@ class Article extends Component {
             title: PropTypes.string.isRequired,
             text: PropTypes.string,
             comments: PropTypes.array
-        }).isRequired
+        }).isRequired,
+        // from redux AC
+        deleteArticle: PropTypes.func.isRequired
     }
 
     componentDidMount() {

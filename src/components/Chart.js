@@ -8,10 +8,11 @@ class Chart extends Component {
 
     componentDidMount() {
         console.log('---', 'mounting chart')
+        this.container.innerHTML = 'do some charting with d3 or else'
     }
 
     render() {
-        return <div ref = {this.setContainerRef} />
+        return <div ref = {this.setContainerRef} ></div>
     }
 
     componentWillReceiveProps(nextProps) {

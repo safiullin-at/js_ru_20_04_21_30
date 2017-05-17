@@ -5,11 +5,13 @@ import 'react-select/dist/react-select.css'
 
 class SelectFilter extends Component {
     static propTypes = {
-        articles: PropTypes.array
+        articles: PropTypes.array,
+        selection: PropTypes.array,
+        onFilterChange: PropTypes.func
     };
 
-    state = {
-        selection: null
+    static defaultProps = {
+        onFilterChange: () => {}
     }
 
     render() {
@@ -19,14 +21,12 @@ class SelectFilter extends Component {
         }))
 
         return (
-            <Select options = {options} value = {this.state.selection}
-                    onChange = {this.handleSelectionChange}
+            <Select options = {options} value = {this.props.selection}
+                    onChange = {this.props.onFilterChange}
                     multi = {true}
             />
         )
     }
-
-    handleSelectionChange = selection => this.setState({ selection })
 }
 
 export default SelectFilter
