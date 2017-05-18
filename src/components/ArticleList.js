@@ -40,6 +40,7 @@ const mapStateToProps = ({articles, filters: {selection = [], dateRange: {from: 
     articles = articles.map(article => ({...article, date: new Date(article.date)}))
 
     // filtering by id
+    //с этим ты перемудрил, но в остальном все хорошо
     const idToArticleMapping = articles.reduce((acc, cur) => ({...acc, [cur.id]: cur}), {})
     let filteredArticles = selection.length ? selection.map(({value}) => idToArticleMapping[value]) : articles
     filteredArticles = filteredArticles.filter(article => article)
