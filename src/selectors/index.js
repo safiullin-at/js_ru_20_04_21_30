@@ -2,6 +2,8 @@ import {createSelector} from 'reselect'
 
 export const articlesGetter = state => state.articles
 export const filtersGetter = state => state.filters
+export const commentsGetter = state => state.comments
+export const idGetter = (state, props) => props.id
 
 export const filtratedArticlesSelector = createSelector(articlesGetter, filtersGetter, (articles, filters) => {
     console.log('---', 'recompute filtrated articles')
@@ -13,4 +15,10 @@ export const filtratedArticlesSelector = createSelector(articlesGetter, filtersG
         return (!selected.length || selected.includes(article.id)) &&
             (!from || !to || (published > from && published < to))
     })
+})
+
+export const commentSelectorFactory = () => createSelector(commentsGetter, idGetter, (comments, id) => {
+    console.log('---', 'find comment', id)
+
+    return comments.find(comment => comment.id === id)
 })
