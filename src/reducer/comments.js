@@ -1,14 +1,15 @@
 import {normalizedComments as defaultComments} from '../fixtures'
-import {} from '../constants'
+import {ADD_COMMENT} from '../constants'
+import {arrayToMap} from '../utils'
 
-const commentsMap = defaultComments.reduce((acc, comment) => ({
-    ...acc, [comment.id]: comment
-}), {})
-
-export default (comments = commentsMap, action) => {
-    const {type, payload} = action
-
+export default (comments = arrayToMap(defaultComments), action) => {
+    const {type, payload, randomId} = action
     switch (type) {
+        case ADD_COMMENT:
+            return comments.set(randomId, {
+                ...payload.comment,
+                id: randomId
+            })
     }
 
     return comments
