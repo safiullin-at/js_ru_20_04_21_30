@@ -1,4 +1,4 @@
-import {DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, SUCCESS, START} from '../constants'
+import {DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE, SUCCESS, START} from '../constants'
 import {arrayToMap} from '../utils'
 import {Record, OrderedMap} from 'immutable'
 
@@ -7,7 +7,8 @@ const ArticleModel = Record({
     date: null,
     title: null,
     text: '',
-    comments: []
+    comments: [],
+    loading: false
 })
 
 const DefaultReducerState = Record({
@@ -33,6 +34,12 @@ export default (articles = new DefaultReducerState(), action) => {
                 .set('entities', arrayToMap(response, ArticleModel))
                 .set('loading', false)
                 .set('loaded', true)
+
+        case LOAD_ARTICLE + START:
+            return articles.setIn(['entities', payload.id, 'loading'], true)
+
+        case LOAD_ARTICLE + SUCCESS:
+            return articles.setIn(['entities', payload.id], new ArticleModel(payload.response))
     }
 
     return articles
