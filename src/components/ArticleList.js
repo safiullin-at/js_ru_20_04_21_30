@@ -31,6 +31,7 @@ class ArticleList extends Component {
 }
 
 ArticleList.propTypes = {
+    // from redux state
     articles: PropTypes.array,
     //from accordion decorator
     toggleOpenItem: PropTypes.func.isRequired,

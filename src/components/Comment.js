@@ -22,7 +22,6 @@ Comment.propTypes = {
 
 function createMapStateToProps() {
     const commentSelector = commentSelectorFactory()
-
     return function mapStateToProps(state, ownProps) {
         return {
             comment: commentSelector(state, ownProps)
