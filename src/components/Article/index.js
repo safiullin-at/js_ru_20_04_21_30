@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import CommentList from '../CommentList'
+import CommnetList from '../CommentList'
 import PropTypes from 'prop-types'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import './style.css'
@@ -7,29 +7,22 @@ import {connect} from 'react-redux'
 import {deleteArticle} from '../../AC/index'
 
 class Article extends Component {
-/*
-    constructor() {
-        super()
-        this.state = {
-            isOpen: false
-        }
-    }
-*/
     static propTypes = {
         article: PropTypes.shape({
             title: PropTypes.string.isRequired,
             text: PropTypes.string,
             comments: PropTypes.array
-        }).isRequired
+        }),
+        //from toggleOpen decorator
+        isOpen: PropTypes.bool,
+        toggleOpen: PropTypes.func
     }
 
-    componentDidMount() {
-        console.log('---', 'mounted')
+/*
+    componentWillMount() {
+        console.log('---', 'mounting')
     }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.isOpen != this.props.isOpen
-    }
+*/
 
     componentWillUpdate() {
         console.log('---', 'updating')
@@ -41,8 +34,8 @@ class Article extends Component {
             <section>
                 <h2 onClick={toggleOpen}>
                     {article.title}
-                    <a href = "#" onClick = {this.handleDelete}>delete me</a>
                 </h2>
+                <a href = "#" onClick = {this.handleDelete}>delete me</a>
                 <CSSTransitionGroup
                     transitionName = "article"
                     transitionEnterTimeout = {500}
@@ -56,7 +49,7 @@ class Article extends Component {
 
     handleDelete = ev => {
         ev.preventDefault()
-        const {deleteArticle, article} = this.props
+        const { deleteArticle, article } = this.props
         deleteArticle(article.id)
     }
 
@@ -64,7 +57,7 @@ class Article extends Component {
         return this.props.isOpen && (
             <div>
                 {this.props.article.text}
-                <CommentList comments={this.props.article.comments}/>
+                <CommnetList article = {this.props.article}/>
             </div>
         )
     }
