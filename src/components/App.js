@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ArticleList from './ArticleList'
+import ArticlesPage from '../route_handlers/ArticlesPage'
 import UserForm from './UserForm'
 import Filters from './Filters/index'
 import Counter from './Counter'
@@ -24,7 +24,7 @@ class App extends Component {
 
                     <Route path = '/counter' component = {Counter}/>
                     <Route path = '/filters' component = {Filters}/>
-                    <Route path = '/articles' component = {ArticleList}/>
+                    <Route path = '/articles' component = {ArticlesPage}/>
                 </div>
             </Router>
         )

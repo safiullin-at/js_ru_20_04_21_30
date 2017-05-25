@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import {findDOMNode} from 'react-dom'
-import Article from './Article/index'
 import PropTypes from 'prop-types'
-import accordion from '../decorators/accordion'
 import {connect} from 'react-redux'
 import Loader from './Loader'
 import {filteredArticlesSelector} from '../selectors'
 import {loadAllArticles} from '../AC'
+import {NavLink} from 'react-router-dom'
 
 class ArticleList extends Component {
     componentDidMount() {
@@ -15,16 +14,11 @@ class ArticleList extends Component {
     }
 
     render() {
-        console.log('---', 'rendering ArticleList')
-        const {articles, isLoading, toggleOpenItem, isItemOpened} = this.props
+        const {articles, isLoading, match} = this.props
         if (isLoading) return <Loader />
 
         const elements = articles.map(article => <li key={article.id}>
-            <Article article = {article}
-                     isOpen = {isItemOpened(article.id)}
-                     toggleOpen = {toggleOpenItem(article.id)}
-                     ref = {article.id}
-            />
+            <NavLink to = {`${match.url}/${article.id}`} activeStyle = {{color: 'red'}}>{article.title}</NavLink>
         </li>)
         return (
             <ul>
@@ -36,9 +30,7 @@ class ArticleList extends Component {
 
 ArticleList.propTypes = {
     articles: PropTypes.array,
-    //from accordion decorator
-    toggleOpenItem: PropTypes.func.isRequired,
-    isItemOpened: PropTypes.func.isRequired
+    match: PropTypes.object.isRequired
 }
 
 export default connect((state) => {
@@ -47,4 +39,4 @@ export default connect((state) => {
         isLoading: state.articles.loading,
         isLoaded: state.articles.loaded
     }
-}, {loadAllArticles})(accordion(ArticleList))
+}, {loadAllArticles})(ArticleList)
