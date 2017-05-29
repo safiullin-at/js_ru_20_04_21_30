@@ -9,6 +9,8 @@ import NotFoundPage from '../route_handlers/NotFoundPage'
 import {Redirect, Route, NavLink, Switch} from 'react-router-dom'
 import {ConnectedRouter as Router} from 'react-router-redux'
 import history from '../history'
+import Menu from './Menu'
+import MenuItem from './Menu/MenuItem'
 
 class App extends Component {
     static propTypes = {
@@ -35,11 +37,11 @@ class App extends Component {
             <Router history = {history}>
                 <div>
                     <UserForm value = {this.state.username} onChange = {this.handleUserChange}/>
-                    <ul>
-                        <li><NavLink to = '/counter' activeStyle = {{color: 'red'}}>Counter</NavLink></li>
-                        <li><NavLink to = '/filters' activeStyle = {{color: 'red'}}>Filters</NavLink></li>
-                        <li><NavLink to = '/articles' activeStyle = {{color: 'red'}}>Articles</NavLink></li>
-                    </ul>
+                    <Menu>
+                        <MenuItem path = '/counter'/>
+                        <MenuItem path = '/filters'/>
+                        <MenuItem path = '/articles'/>
+                    </Menu>
 
                     <Switch>
                         <Route path = '/counter' component = {Counter} exact />
