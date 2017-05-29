@@ -1,6 +1,6 @@
-import {DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE, SUCCESS, START} from '../constants'
+import {DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE, LOAD_ARTICLE_COMMENTS, START, SUCCESS} from '../constants'
 import {arrayToMap} from '../utils'
-import {Record, OrderedMap} from 'immutable'
+import {Map, OrderedMap, Record} from 'immutable'
 
 const ArticleModel = Record({
     id: null,
@@ -8,23 +8,28 @@ const ArticleModel = Record({
     title: null,
     text: '',
     comments: [],
-    loading: false
+    loading: false,
+    loadedComments: false,
+    loadingComments: false
 })
 
 const DefaultReducerState = Record({
-    entities: new OrderedMap,
+    entities: new OrderedMap({}),
     loading: false,
     loaded: false
 })
 
 export default (articles = new DefaultReducerState(), action) => {
-    const {type, payload, randomId, response} = action
+    const {type, payload, response, randomId} = action
     switch (type) {
         case DELETE_ARTICLE:
             return articles.deleteIn(['entities', payload.id])
 
         case ADD_COMMENT:
-            return articles.updateIn(['entities', payload.articleId, 'comments'], (comments) => comments.concat(randomId))
+            return articles.updateIn(
+                ['entities', payload.articleId, 'comments'],
+                (comments) => comments.concat(randomId)
+            )
 
         case LOAD_ALL_ARTICLES + START:
             return articles.set('loading', true)
@@ -40,6 +45,15 @@ export default (articles = new DefaultReducerState(), action) => {
 
         case LOAD_ARTICLE + SUCCESS:
             return articles.setIn(['entities', payload.id], new ArticleModel(payload.response))
+
+        case LOAD_ARTICLE_COMMENTS + START:
+            return articles.setIn(['entities', payload.articleId, 'loadingComments'], true)
+
+        case LOAD_ARTICLE_COMMENTS + SUCCESS:
+            return articles
+                .setIn(['entities', payload.articleId, 'loadingComments'], false)
+                .setIn(['entities', payload.articleId, 'loadedComments'], true)
+
     }
 
     return articles
