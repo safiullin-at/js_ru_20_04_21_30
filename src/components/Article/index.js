@@ -20,6 +20,10 @@ class Article extends Component {
         toggleOpen: PropTypes.func
     }
 
+    static contextTypes = {
+        user: PropTypes.string
+    }
+
 /*
     componentWillMount() {
         console.log('---', 'mounting')
@@ -50,6 +54,7 @@ class Article extends Component {
                 <h2 onClick={toggleOpen}>
                     {article.title}
                 </h2>
+                <h3>User: {this.context.user}</h3>
                 <a href = "#" onClick = {this.handleDelete}>delete me</a>
                 <CSSTransitionGroup
                     transitionName = "article"
@@ -84,4 +89,6 @@ class Article extends Component {
 
 export default connect((state, { id }) => ({
     article: state.articles.getIn(['entities', id])
-}), { deleteArticle, loadArticle })(Article)
+}), { deleteArticle, loadArticle }, null, {
+    pure: false
+})(Article)
