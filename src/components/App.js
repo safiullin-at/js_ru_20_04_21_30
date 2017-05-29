@@ -4,11 +4,11 @@ import ArticlesPage from '../route_handlers/ArticlesPage'
 import UserForm from './UserForm'
 import Filters from './Filters/index'
 import Counter from './Counter'
+import CommentsPage from '../route_handlers/CommentsPage'
 import {BrowserRouter as Router, Route, NavLink, Switch} from 'react-router-dom'
 
 class App extends Component {
     static propTypes = {
-        articles: PropTypes.array
     };
 
     render() {
@@ -27,6 +27,7 @@ class App extends Component {
                         <Route path = '/filters' component = {Filters}/>
                         <Route path = '/articles/new' render = {this.getNewArticleComponent}/>
                         <Route path = '/articles' component = {ArticlesPage}/>
+                        <Route path="/comments/:page" component={CommentsPage} />
                     </Switch>
                 </div>
             </Router>
@@ -36,7 +37,6 @@ class App extends Component {
     getNewArticleComponent = () => {
         return <h2>New Article Component</h2>
     }
-
 }
 
 export default App
