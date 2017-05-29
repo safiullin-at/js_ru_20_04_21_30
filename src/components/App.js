@@ -6,7 +6,9 @@ import Filters from './Filters/index'
 import Counter from './Counter'
 import CommentsPage from '../route_handlers/CommentsPage'
 import NotFoundPage from '../route_handlers/NotFoundPage'
-import {BrowserRouter as Router, Redirect, Route, NavLink, Switch} from 'react-router-dom'
+import {Redirect, Route, NavLink, Switch} from 'react-router-dom'
+import {ConnectedRouter as Router} from 'react-router-redux'
+import history from '../history'
 
 class App extends Component {
     static propTypes = {
@@ -14,7 +16,7 @@ class App extends Component {
 
     render() {
         return (
-            <Router>
+            <Router history = {history}>
                 <div>
                     <UserForm />
                     <ul>
