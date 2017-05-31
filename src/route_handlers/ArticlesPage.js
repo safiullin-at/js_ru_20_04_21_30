@@ -10,10 +10,15 @@ class ArticlesPage extends Component {
         match: PropTypes.object.isRequired
     };
 
+    static contextTypes = {
+        user: PropTypes.string
+    }
+
     render() {
         const {match} = this.props
         return (
             <div>
+                <h2>USERNAME: {this.context.user}</h2>
                 <ArticleList match = {match} />
                 <Route path = {`${match.url}/:id`} render = {this.getArticle}/>
             </div>

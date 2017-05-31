@@ -8,11 +8,17 @@ import {loadArticlesComments} from '../AC'
 import {connect} from 'react-redux'
 
 class CommentList extends Component {
+    static contextTypes = {
+        router: PropTypes.object,
+        store: PropTypes.object
+    }
+
     componentWillReceiveProps({ article, isOpen, loadArticlesComments }) {
         if (isOpen && !article.loadedComments && !article.loadingComments) loadArticlesComments(article.id)
     }
 
     render() {
+        console.log('context: ', this.context)
         const {isOpen, toggleOpen} = this.props
         const linkText = isOpen ? 'hide comments' : 'show comments'
 
