@@ -34,7 +34,7 @@ class App extends Component {
         )
     }
 
-    getNewArticleComponent = () => {
+    getNewArticleComponent = (...rest) => {
         return <h2>New Article Component</h2>
     }
 }
